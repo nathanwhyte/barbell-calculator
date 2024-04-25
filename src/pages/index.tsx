@@ -26,9 +26,10 @@ export default function Home() {
       <main className="flex min-h-screen flex-col items-center bg-slate-800">
         <button
           className="mb-16 mt-16 h-12 w-56 rounded bg-purple-400"
-          onClick={() =>
-            setUnit(unit === Unit.Kilos ? Unit.Pounds : Unit.Kilos)
-          }
+          onClick={() => {
+            setUnit(unit === Unit.Kilos ? Unit.Pounds : Unit.Kilos);
+            setPlates([<></>]);
+          }}
         >
           <span className="m-2 text-xl font-bold text-white">
             Switch to {unit === Unit.Kilos ? Unit.Pounds : Unit.Kilos}
@@ -40,8 +41,8 @@ export default function Home() {
         <div className="mb-4">
           <input
             type="number"
-            name="weight"
             className="h-10 w-64 rounded bg-slate-600 text-center text-xl text-white"
+            placeholder={`${unit.toLowerCase()}`}
             onChange={(e) => setWeight(Number(e.target.value))}
           />
         </div>
