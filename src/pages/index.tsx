@@ -11,7 +11,9 @@ export default function Home() {
   const [pounds, setPounds] = useState(0);
   const [kilos, setKilos] = useState(0);
 
-  // TODO: mobile styling
+  const [count, setCount] = useState(0);
+
+  // TODO: mobile styling (can do larger text, looks fine on mobile)
   // TODO: break out into separate components
   return (
     <>
@@ -26,7 +28,7 @@ export default function Home() {
       </div>
 
       <main className="flex min-h-screen flex-col items-center bg-zinc-800 py-8">
-        <div className="flex flex-row items-center gap-2 pb-8">
+        <div className="flex flex-row items-center gap-2 pb-8 text-xl">
           <input
             type="text"
             placeholder="lbs"
@@ -40,7 +42,7 @@ export default function Home() {
                 ),
               );
             }}
-            className="h-8 w-24 rounded bg-zinc-700 text-center text-white"
+            className="h-12 w-32 rounded bg-zinc-700 text-center text-white"
           />
           <div className="font-bold text-white">{"<>"}</div>
           <input
@@ -56,29 +58,29 @@ export default function Home() {
                 ),
               );
             }}
-            className="h-8 w-24 rounded bg-zinc-700 text-center text-white"
+            className="h-12 w-32 rounded bg-zinc-700 text-center text-xl text-white"
           />
           <button
             onClick={() => {
               setKilos(0);
               setPounds(0);
             }}
-            className="text-md h-8 rounded px-2 py-1 text-white"
+            className="h-8 rounded px-2 py-1 text-xl font-bold text-white"
           >
             ↺
           </button>
         </div>
 
-        <div className="flex flex-row gap-2 pb-4">
+        <div className="flex flex-row gap-4 pb-6">
           <input
             type="number"
-            className="h-8 w-48 rounded bg-zinc-700 text-center text-white"
+            className="h-12 w-52 rounded bg-zinc-700 text-center text-2xl text-white"
             placeholder={`${unit.toLowerCase()}`}
             value={weight.toString()}
             onChange={(e) => setWeight(Number(e.target.value))}
           />
           <button
-            className="w-10 rounded bg-purple-400 px-2 py-1 text-white"
+            className="w-16 rounded bg-purple-400 px-2 py-1 text-xl text-white"
             onClick={() => {
               setUnit(unit === Unit.Kilos ? Unit.Pounds : Unit.Kilos);
               setPlates([<></>]);
@@ -88,9 +90,9 @@ export default function Home() {
           </button>
         </div>
 
-        <div className="pb-6">
+        <div className="flex flex-row gap-4 pb-8">
           <button
-            className="rounded bg-violet-400 px-2 py-1 text-white"
+            className="rounded bg-violet-400 px-6 py-2 text-xl text-white"
             type="submit"
             onClick={() => {
               setWeight(getRoundedWeight(weight, unit));
@@ -99,18 +101,42 @@ export default function Home() {
           >
             Calculate
           </button>
+          <button
+            className="rounded bg-blue-400 px-4 py-2 text-xl text-white"
+            type="submit"
+            onClick={() => {
+              setWeight(0);
+              setPlates([<></>]);
+            }}
+          >
+            Reset
+          </button>
         </div>
 
-        {/* <div className="h-72"> */}
-        <div className="flex flex-col items-center gap-1 pb-8">
+        <div className="flex h-72 grow flex-col items-center gap-1 pb-8">
           {plates.map((plate) => {
-            // render each plate with a key to silence console error
             return <div key={crypto.randomUUID()}>{plate}</div>;
           })}
         </div>
 
-        {/* <div className="text-white">TODO: set count</div>
-        <div className="text-white">TODO: timer</div> */}
+        <div className="flex w-full flex-row items-center justify-between px-16 pb-24 font-mono text-5xl text-white">
+          <span className="text-2xl">Sets:</span>
+          <span className="font-bold">{count}</span>
+          <div className="flex flex-row items-center gap-1 font-mono text-lg">
+            <button
+              className="rounded bg-zinc-700 px-4 py-2 text-white"
+              onClick={() => count > 0 && setCount(count - 1)}
+            >
+              -
+            </button>
+            <button
+              className="rounded bg-zinc-700 px-4 py-2 text-white"
+              onClick={() => setCount(count + 1)}
+            >
+              +
+            </button>
+          </div>
+        </div>
       </main>
     </>
   );
