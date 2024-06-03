@@ -89,7 +89,7 @@ export default function Home() {
         </div>
 
         {/* <div className="h-72"> */}
-        <div className="pb-8">
+        <div className="flex flex-col items-center gap-1 pb-8">
           {plates.map((plate) => {
             // render each plate with a key to silence console error
             return <div key={crypto.randomUUID()}>{plate}</div>;
