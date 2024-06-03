@@ -14,28 +14,38 @@ import {
 const KILO_INCREMENT = 2.5;
 const POUNDS_INCREMENT = 5;
 
+const CONVERSION_FACTOR = 0.45359237;
+
 export default function getPlates(weight: number, unit: Unit) {
   if (unit === Unit.Kilos) {
     if (weight <= 20) {
       return [None()];
     }
 
-    return getKiloPlates(getRoundedWeight(weight, unit));
+    return getKiloPlates(getRoundedWeight(weight - 20, unit));
   }
 
   if (weight <= 45) {
     return [None()];
   }
 
-  return getPoundPlates(getRoundedWeight(weight, unit));
+  return getPoundPlates(getRoundedWeight(weight - 45, unit));
 }
 
-function getRoundedWeight(weight: number, unit: Unit) {
+export function convertWeight(weight: number, unit: Unit) {
   if (unit === Unit.Kilos) {
-    return Math.ceil(weight / KILO_INCREMENT) * KILO_INCREMENT - 20;
+    return weight / CONVERSION_FACTOR;
   }
 
-  return Math.ceil(weight / POUNDS_INCREMENT) * POUNDS_INCREMENT - 45;
+  return weight * CONVERSION_FACTOR;
+}
+
+export function getRoundedWeight(weight: number, unit: Unit) {
+  if (unit === Unit.Kilos) {
+    return Math.ceil(weight / KILO_INCREMENT) * KILO_INCREMENT;
+  }
+
+  return Math.ceil(weight / POUNDS_INCREMENT) * POUNDS_INCREMENT;
 }
 
 function getPoundPlates(weight: number) {
