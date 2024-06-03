@@ -9,8 +9,10 @@ export default function Home() {
   const [plates, setPlates] = useState([<></>]);
 
   const [pounds, setPounds] = useState(0);
-  const [kilos, setKilos] = useState(0.0);
+  const [kilos, setKilos] = useState(0);
 
+  // TODO: mobile styling
+  // TODO: break out into separate components
   return (
     <>
       <Head>
@@ -28,7 +30,8 @@ export default function Home() {
           <input
             type="text"
             placeholder="lbs"
-            value={pounds.toString()}
+            value={pounds !== 0 ? pounds.toString() : ""}
+            onCopy={(_e) => setUnit(Unit.Pounds)}
             onChange={(e) => {
               setPounds(Number(e.target.value));
               setKilos(
@@ -43,7 +46,8 @@ export default function Home() {
           <input
             type="text"
             placeholder="kg"
-            value={kilos.toString()}
+            value={kilos !== 0 ? kilos.toString() : ""}
+            onCopy={(_e) => setUnit(Unit.Kilos)}
             onChange={(e) => {
               setKilos(Number(e.target.value));
               setPounds(
@@ -54,6 +58,15 @@ export default function Home() {
             }}
             className="h-8 w-24 rounded bg-zinc-700 text-center text-white"
           />
+          <button
+            onClick={() => {
+              setKilos(0);
+              setPounds(0);
+            }}
+            className="text-md h-8 rounded px-2 py-1 text-white"
+          >
+            ↺
+          </button>
         </div>
 
         <div className="flex flex-row gap-2 pb-4">
